@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+# This is a simplified example deploy script for demonstrating GitSync Issue #101.
+# The production deploy script worries about a bunch of extra stuff,
+# like actually copying over the built project directory to a web server
+# and switching over what directory the webserver is pointing at.
+
+composer build
+
+# We have to make sure to properly initialize the Git repo during deployment
+# so that Grav GitSync will work correctly. We'll start by copying the `.git`
+# directory into our build path, then checkout the appropriate branch. If
+# we don't checkout a branch, GitSync will fail to auto-commit/push changes.
+cp -r .git build/user
+git -C build/user checkout master

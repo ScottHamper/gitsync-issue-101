@@ -1,0 +1,46 @@
+{
+    "name": "GitSync Issue 101 Demo",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "scripts": {
+        "build": [
+            "composer build:grav",
+            "composer build:plugins",
+            "composer build:themes",
+            "composer build:user"
+        ],
+        "build:grav": [
+            "rm -rf build",
+            "git clone -b 1.5.3 --depth 1 https://github.com/getgrav/grav build",
+            "rm -rf build/.git",
+            "composer install -d build --no-dev --prefer-dist --no-interaction --optimize-autoloader --ignore-platform-reqs",
+            "rm build/robots.txt",
+            "cp .htaccess build",
+            "cp web.config build"
+        ],
+        "build:plugins": [
+            "rm -rf build/user/plugins/*",
+            "cd build && php bin/gpm direct-install -y https://getgrav.org/download/plugins/admin/1.8.11",
+            "cd build && php bin/gpm direct-install -y https://getgrav.org/download/plugins/email/2.7.1",
+            "cd build && php bin/gpm direct-install -y https://getgrav.org/download/plugins/error/1.6.1",
+            "cd build && php bin/gpm direct-install -y https://getgrav.org/download/plugins/form/2.16.3",
+            "cd build && php bin/gpm direct-install -y https://getgrav.org/download/plugins/login/2.7.3",
+            "cd build && php bin/gpm direct-install -y https://getgrav.org/download/plugins/markdown-notices/1.0.1",
+            "cd build && php bin/gpm direct-install -y https://getgrav.org/download/plugins/problems/2.0.0",
+            "cd build && php bin/gpm direct-install -y https://getgrav.org/download/plugins/git-sync/2.0.0"
+        ],
+        "build:themes": [
+            "rm -rf build/user/themes/*",
+            "cd build && php bin/gpm direct-install -y https://getgrav.org/download/themes/quark/1.2.1"
+        ],
+        "build:user": [
+            "rm -rf build/user/accounts && cp -r accounts build/user",
+            "rm -rf build/user/config && cp -r config build/user",
+            "rm -rf build/user/data && cp -r data build/user",
+            "rm -rf build/user/pages && cp -r pages build/user"
+        ]
+    }
+}
