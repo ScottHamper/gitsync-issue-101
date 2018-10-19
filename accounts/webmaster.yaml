@@ -1,0 +1,11 @@
+email: webmaster@example.com
+fullname: Webmaster
+title: Webmaster
+state: enabled
+access:
+  admin:
+    login: true
+    super: true
+  site:
+    login: true
+hashed_password: $2y$10$oiU882YrI68DdsefzlmiwuETDGTzNeBh//AdVDm4w2swdAaFBjPoK
